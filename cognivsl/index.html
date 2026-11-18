@@ -1,0 +1,1700 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="assets/logo.png" />
+    <title>Post</title>
+
+    <!-- ==========================================================
+         CONFIGURACAO DA PAGINA  —  MEXA SOMENTE AQUI
+         ==========================================================
+         Tudo o que normalmente precisa ser trocado esta neste bloco.
+         Nenhum outro arquivo precisa ser editado.
+         ========================================================== -->
+    <script type="text/javascript">
+      window.PAGE_CONFIG = {
+
+        /* ------------------------------------------------------
+           1) LINK DO CHECKOUT  <<< O MAIS IMPORTANTE
+           ------------------------------------------------------
+           Troque a URL abaixo pelo seu link de checkout / afiliado.
+           E usada no botao "YES, GET IT NOW".                     */
+        CHECKOUT_URL: 'https://order.wealthpay.io/ms12lacy18e1?hid=b2lkPW9mZl8zNTIyNjA0JmFpZD1hZmY0ODI4MjY4JnVpZD1ibF82NDIxNjQx&affid=aff4828268',
+
+        /* Repassar os parametros da URL (utm_source, src, cid, etc.)
+           para o checkout?  true = sim (recomendado)              */
+        FORWARD_URL_PARAMS: true,
+
+        /* ------------------------------------------------------
+           2) MOMENTO DO PITCH
+           O bloco de CEP acompanha o pitchTime configurado no VTurb.
+           ------------------------------------------------------ */
+
+        /* ------------------------------------------------------
+           3) TEXTOS E TEMPOS DA OFERTA
+           ------------------------------------------------------ */
+        VERIFY_MS: 10000,              /* duracao da barra "Verifying Eligibility" (ms) */
+        COUNTDOWN_SECONDS: 60,         /* contagem regressiva da oferta (segundos)      */
+        OFFER_DISCOUNT: '35% OFF',     /* desconto exibido                              */
+        OFFER_PRICE: '$99!',           /* preco exibido                                 */
+        OFFER_NOTE: 'Complete 3-bottle treatment',
+        OFFER_BUTTON: 'YES, GET IT NOW',
+
+        /* ------------------------------------------------------
+           4) IMAGENS (ficam na pasta assets/)
+           ------------------------------------------------------ */
+        TAP_GIF: 'assets/tap.gif',       /* mãozinha animada            */
+        PRODUCT_IMG: 'assets/produto.png' /* foto dos potes na oferta    */
+      };
+    </script>
+
+    <script type="text/javascript">
+      ! function(i, n) {
+        i._plt = i._plt || (n && n.timeOrigin ? n.timeOrigin + n.now() : Date.now())
+      }(window, performance);
+    </script>
+    <style type="text/css">
+      /* =========================================================
+     TEMA — mude cores, tamanhos e cantos aqui
+     ========================================================= */
+      :root {
+        --primary: #0866FF;
+        /* azul principal (logo, links, ativo) */
+        --verified: #0866FF;
+        /* selo de verificado */
+        --page-bg: #F0F2F5;
+        /* fundo da página */
+        --card-bg: #FFFFFF;
+        /* fundo do post e da barra */
+        --text: #050505;
+        /* texto principal */
+        --text-2: #65676B;
+        /* texto secundário (data, contadores, botões) */
+        --icon: #65676B;
+        /* ícones da barra central */
+        --bubble: #F0F2F5;
+        /* balão dos comentários */
+        --circle-btn: #E4E6EB;
+        /* botões redondos da direita */
+        --hover: #F2F2F2;
+        /* hover dos botões */
+        --divider: #CED0D4;
+        /* linhas divisórias */
+        --love: #F33E58;
+        /* reação coração */
+        --video-bg: #18191A;
+        /* fundo do espaço do vídeo */
+
+        --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        --nav-h: 56px;
+        /* altura da barra superior */
+        --card-w: 680px;
+        /* largura máxima do post */
+        --card-radius: 8px;
+        /* canto do post */
+        --bubble-radius: 18px;
+        /* canto do balão de comentário */
+        --avatar: 40px;
+        /* foto do autor do post */
+        --avatar-sm: 36px;
+        /* foto de quem comenta */
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--page-bg);
+        color: var(--text);
+        font-family: var(--font);
+        font-size: 15px;
+        line-height: 1.34;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      svg {
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      /* ---------- Barra superior ---------- */
+      .topbar {
+        position: fixed;
+        inset: 0 0 auto 0;
+        z-index: 10;
+        height: var(--nav-h);
+        background: var(--card-bg);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .1), 0 2px 4px rgba(0, 0, 0, .04);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 16px;
+      }
+
+      .tb-left,
+      .tb-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: 1;
+      }
+
+      .tb-right {
+        justify-content: flex-end;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        flex: none;
+        font-weight: 800;
+        font-size: 13px;
+        letter-spacing: .5px;
+      }
+
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        height: 40px;
+        width: 240px;
+        padding: 0 12px;
+        background: var(--page-bg);
+        border-radius: 999px;
+        color: var(--text-2);
+      }
+
+      .search input {
+        border: 0;
+        outline: 0;
+        background: transparent;
+        width: 100%;
+        font: inherit;
+        color: var(--text);
+      }
+
+      .search input::placeholder {
+        color: var(--text-2);
+      }
+
+      .tb-center {
+        display: flex;
+        height: 100%;
+      }
+
+      .tab {
+        width: 112px;
+        height: 100%;
+        display: grid;
+        place-items: center;
+        color: var(--icon);
+        position: relative;
+      }
+
+      .tab::after {
+        content: "";
+        position: absolute;
+        inset: 4px 4px;
+        border-radius: 8px;
+        transition: background .15s;
+      }
+
+      .tab:hover::after {
+        background: var(--hover);
+      }
+
+      .tab svg {
+        position: relative;
+        z-index: 1;
+        width: 28px;
+        height: 28px;
+      }
+
+      .circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--circle-btn);
+        color: var(--text);
+        display: grid;
+        place-items: center;
+        flex: none;
+        border: 0;
+        cursor: pointer;
+      }
+
+      .circle svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* ---------- Post ---------- */
+      main {
+        padding: calc(var(--nav-h) + 16px) 0 40px;
+      }
+
+      .post {
+        max-width: var(--card-w);
+        margin: 0 auto;
+        background: var(--card-bg);
+        border-radius: var(--card-radius);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+        padding: 12px 16px 16px;
+      }
+
+      .post-head {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .avatar {
+        width: var(--avatar);
+        height: var(--avatar);
+        border-radius: 50%;
+        flex: none;
+        background: #C8CCD2 center / cover no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='15.5' r='7' fill='%23fff'/%3E%3Cpath d='M5 38c1.6-8.2 7.4-12.5 15-12.5S33.4 29.8 35 38z' fill='%23fff'/%3E%3C/svg%3E");
+      }
+
+      .avatar.sm {
+        width: var(--avatar-sm);
+        height: var(--avatar-sm);
+      }
+
+      .who {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .name {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-weight: 600;
+        font-size: 15px;
+      }
+
+      .badge {
+        width: 14px;
+        height: 14px;
+        flex: none;
+      }
+
+      .meta {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 13px;
+        color: var(--text-2);
+        margin-top: 2px;
+      }
+
+      .meta svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      .more {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        color: var(--text-2);
+      }
+
+      .more:hover {
+        background: var(--hover);
+      }
+
+      .post-title {
+        font-weight: 700;
+        font-size: 15px;
+        margin: 18px 0 14px;
+        text-transform: uppercase;
+      }
+
+      .post-text {
+        margin-bottom: 16px;
+      }
+
+      /* Espaço do vídeo */
+      .video {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: var(--video-bg);
+        overflow: hidden;
+      }
+
+      .video-ph {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-content: center;
+        gap: 10px;
+        text-align: center;
+        color: rgba(255, 255, 255, .7);
+        font-size: 14px;
+      }
+
+      .video-ph svg {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto;
+        opacity: .8;
+      }
+
+      .video iframe,
+      .video video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      /* Vídeo do VTurb: o player cuida do próprio tamanho; o fundo escuro preenche as laterais */
+      .video-vturb {
+        background: var(--video-bg);
+      }
+
+      /* Reações e contadores */
+      .stats {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 16px;
+        color: var(--text-2);
+        font-size: 15px;
+      }
+
+      .reacts {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .reacts .icons {
+        display: flex;
+      }
+
+      .reacts .icons svg {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        box-shadow: 0 0 0 2px var(--card-bg);
+      }
+
+      .reacts .icons svg+svg {
+        margin-left: -3px;
+      }
+
+      .counts {
+        display: flex;
+        gap: 8px;
+      }
+
+      .actions {
+        display: flex;
+        margin: 0 16px;
+        border-top: 1px solid var(--divider);
+        border-bottom: 1px solid var(--divider);
+        padding: 4px 0;
+      }
+
+      .action {
+        flex: 1;
+        height: 36px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: var(--text-2);
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .action:hover {
+        background: var(--hover);
+      }
+
+      .action svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      /* Comentários */
+      .comments {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .comment {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .bubble {
+        background: var(--bubble);
+        border-radius: var(--bubble-radius);
+        padding: 10px 14px;
+        flex: 1;
+        min-width: 0;
+      }
+
+      .bubble .name {
+        font-size: 15px;
+        margin-bottom: 4px;
+      }
+
+      .reply {
+        margin-left: calc(var(--avatar-sm) + 12px);
+        margin-top: 8px;
+      }
+
+      /* ---------- Responsivo ---------- */
+      @media (max-width: 1100px) {
+        .tab {
+          width: 80px;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .search {
+          width: 40px;
+          padding: 0;
+          justify-content: center;
+        }
+
+        .search input {
+          display: none;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .tb-center {
+          display: none;
+        }
+
+        main {
+          padding-top: calc(var(--nav-h) + 8px);
+        }
+
+        .post {
+          border-radius: 0;
+          padding: 12px 16px 16px;
+        }
+
+        .video,
+        .video-vturb {
+          margin: 0 -16px;
+          width: calc(100% + 32px);
+        }
+
+        .stats {
+          padding: 10px 0;
+        }
+
+        .actions {
+          margin: 0;
+        }
+
+        .circle.hide-sm {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ======================= BARRA SUPERIOR ======================= -->
+    <header class="topbar">
+      <div class="tb-left">
+        <!-- LOGO: o recorte (posição/tamanho) é específico desta imagem 1536x1024.
+         Com uma imagem quadrada, use só: style="background:url('URL') center/cover" --><label class="search"><svg viewbox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-3.5-3.5"></path>
+          </svg> <input type="text" placeholder="Search" /> </label></div>
+      <nav class="tb-center"><a class="tab" aria-label="Home" href="#"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+            <path d="M3.5 10.5 12 3.5l8.5 7V20a1 1 0 0 1-1 1H15v-6.5H9V21H4.5a1 1 0 0 1-1-1z"></path>
+          </svg> </a> <a class="tab" aria-label="Friends" href="#"> <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="9" cy="8" r="3.5"></circle>
+            <path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"></path>
+            <circle cx="17" cy="8.5" r="2.6"></circle>
+            <path d="M17 13.6c2.7.3 4.5 2.4 4.5 5.4"></path>
+          </svg> </a> <a class="tab" aria-label="Video" href="#"> <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+            <rect x="3" y="4.5" width="18" height="15" rx="3"></rect>
+            <path d="M10 9.3v5.4l4.6-2.7z"></path>
+          </svg> </a> <a class="tab" aria-label="Groups" href="#"> <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9"></circle>
+            <circle cx="12" cy="10" r="2.2"></circle>
+            <circle cx="7.6" cy="12" r="1.5"></circle>
+            <circle cx="16.4" cy="12" r="1.5"></circle>
+            <path d="M8.4 17.2c.8-1.8 2.1-2.8 3.6-2.8s2.8 1 3.6 2.8"></path>
+          </svg> </a> <a class="tab" aria-label="Pages" href="#"> <svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+            <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+            <path d="M4 9.5h10.5V20"></path>
+          </svg> </a></nav>
+      <div class="tb-right"><button class="circle" aria-label="Create"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+            <path d="M12 5v14M5 12h14"></path>
+          </svg></button><button class="circle hide-sm" aria-label="Messages"><svg viewbox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.5C6.8 2.5 2.75 6.3 2.75 11.2c0 2.6 1.1 4.8 2.95 6.4v3.9l3.4-1.9c.9.25 1.9.4 2.9.4 5.2 0 9.25-3.8 9.25-8.8S17.2 2.5 12 2.5zm-4 10.2a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6zm4 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6zm4 0a1.3 1.3 0 1 1 0-2.6 1.3 1.3 0 0 1 0 2.6z"></path>
+          </svg></button><button class="circle" aria-label="Notifications"><svg viewbox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.5a6.5 6.5 0 0 0-6.5 6.5v4.6l-1.8 2.9a.9.9 0 0 0 .8 1.4h15a.9.9 0 0 0 .8-1.4l-1.8-2.9V9A6.5 6.5 0 0 0 12 2.5zM9.2 19.2a2.9 2.9 0 0 0 5.6 0z"></path>
+          </svg></button><button class="circle" aria-label="Menu"><svg viewbox="0 0 24 24" fill="currentColor">
+            <path d="M6.5 9.5h11L12 15.5z"></path>
+          </svg></button></div>
+    </header><!-- ============================ POST ============================ -->
+    <main>
+      <article class="post">
+        <div class="post-head">
+          <!-- FOTO DO AUTOR: <div class="avatar" style="background-image:url('URL-DA-FOTO')"></div> -->
+          <div class="avatar" style="background:#111 url('assets/autor.jpg') center / contain no-repeat">&nbsp;</div>
+          <div class="who">
+            <div class="name">Robert F. Kennedy, Jr <svg class="badge" viewbox="0 0 16 16" aria-label="Verified">
+                <path d="M9.89 .95A2.6 2.6 0 0 1 13.16 2.84 2.6 2.6 0 0 1 15.05 6.11 2.6 2.6 0 0 1 15.05 9.89 2.6 2.6 0 0 1 13.16 13.16 2.6 2.6 0 0 1 9.89 15.05 2.6 2.6 0 0 1 6.11 15.05 2.6 2.6 0 0 1 2.84 13.16 2.6 2.6 0 0 1 .95 9.89 2.6 2.6 0 0 1 .95 6.11 2.6 2.6 0 0 1 2.84 2.84 2.6 2.6 0 0 1 6.11 .95 2.6 2.6 0 0 1 9.89 .95Z" fill="var(--verified)"></path>
+                <path d="m4.7 8.2 2.2 2.2 4.4-4.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg></div>
+            <div class="meta"><time id="postDate" datetime="2026-09-30">September 30, 2026</time><span>&middot;</span> <svg viewbox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3">
+                <circle cx="8" cy="8" r="6.5"></circle>
+                <path d="M1.5 8h13M8 1.5c1.9 2 2.8 4.2 2.8 6.5S9.9 12.5 8 14.5C6.1 12.5 5.2 10.3 5.2 8S6.1 3.5 8 1.5z"></path>
+              </svg></div>
+          </div><a class="more" aria-label="More" href="#"><svg viewbox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <circle cx="5" cy="12" r="2"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+              <circle cx="19" cy="12" r="2"></circle>
+            </svg> </a>
+        </div>
+        <h1 class="post-title">Over 63,000 Americans are ditching costly brain supplements after discovering this at-home&nbsp;brain protocol&nbsp;that helped sharpen recall and make senior moments virtually disappear&nbsp;in as little as 7</h1>
+        <p class="post-text">MEMORY RECOVERY AND COGNITIVE RESTORATION: ANOTHER PROMISE FULFILLED BY THE CURRENT ADMINISTRATION AND THE MAHA COMMISSION.</p>
+
+        <div class="video-vturb">
+
+          <!-- ==================================================================
+               PLAYER DA VSL  —  INICIO
+               ==================================================================
+               Este e o unico ponto da pagina que carrega o player da VSL:
+               o player do video (VTurb / ConverteAI). Nao da para hospedar
+               junto, porque o video e streaming.
+
+               PARA TROCAR O VIDEO: apague tudo entre este aviso e o aviso
+               "PLAYER DA VSL - FIM" e cole no lugar o codigo que o
+               VTurb/ConverteAI gera (ele vem em duas partes, a tag do player
+               e o script - cole as duas).
+
+               NAO mexa em nada depois do aviso de FIM: ali comeca o bloco
+               de CEP / oferta.
+               ================================================================== -->
+          <vturb-smartplayer id="ab-6afe216fe708293b8514ddc3" style="display: block; margin: 0 auto; width: 100%;"></vturb-smartplayer>
+          <script type="text/javascript">
+            var s = document.createElement("script");
+            s.src = "https://scripts.converteai.net/f93eec12-25d1-4295-afcb-b6ad233b41e1/ab-test/6afe216fe708293b8514ddc3/player.js";
+            s.async = true;
+            document.head.appendChild(s);
+          </script>
+          <!-- ===== PLAYER DA VSL  —  FIM ===== -->
+
+          <!-- Bloco de CEP + oferta, exibido no pitchTime configurado no VTurb. -->
+          <div id="gpvZipRoot" hidden="" role="dialog" aria-modal="true" aria-label="ZIP code">
+            <style type="text/css">
+              .video-vturb {
+                position: relative;
+              }
+
+              #gpvZipRoot[hidden] {
+                display: none !important;
+              }
+
+              #gpvZipRoot {
+                position: absolute;
+                inset: 0;
+                z-index: 20;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow-y: auto;
+                padding: 12px;
+                background: rgba(6, 9, 14, .88);
+              }
+
+              #gpvZipRoot .gpv-zip-wrap {
+                width: 100%;
+                flex-shrink: 0;
+              }
+
+              #gpvZipRoot {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+              }
+
+              #gpvZipRoot * {
+                box-sizing: border-box;
+              }
+
+              #gpvZipRoot .gpv-zip-wrap {
+                background: transparent;
+                border: none;
+                padding: 16px 14px 18px;
+                text-align: center;
+                max-width: 340px;
+                margin: 0 auto;
+              }
+
+              #gpvZipRoot .gpv-arrows {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                margin: 0 auto 10px;
+                padding: 0 30px;
+              }
+
+              #gpvZipRoot .gpv-arrow {
+                width: 28px;
+                height: 28px;
+                animation: gpvBounce 1.3s ease-in-out infinite;
+                filter: drop-shadow(0 0 6px rgba(62, 224, 106, .55));
+              }
+
+              #gpvZipRoot .gpv-arrow:last-child {
+                animation-delay: .2s;
+              }
+
+              #gpvZipRoot .gpv-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                font-size: 11px;
+                font-weight: 800;
+                letter-spacing: 1.6px;
+                text-transform: uppercase;
+                padding: 7px 14px;
+                border-radius: 999px;
+                line-height: 1.3;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, .25);
+              }
+
+              #gpvZipRoot .gpv-pill svg {
+                width: 14px;
+                height: 14px;
+                display: block;
+                flex: none;
+              }
+
+              #gpvZipRoot .gpv-pill-sel {
+                background: #3ee06a;
+                color: #07210e;
+                margin-bottom: 14px;
+              }
+
+              #gpvZipRoot .gpv-pill-exp {
+                background: #e03131;
+                color: #fff;
+              }
+
+              #gpvZipRoot .gpv-elig {
+                color: #fff;
+                font-size: 16px;
+                font-weight: 500;
+                margin: 0 0 10px;
+                line-height: 1.4;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+              }
+
+              #gpvZipRoot .gpv-ul {
+                font-weight: 800;
+                border-bottom: 2px solid #3ee06a;
+                padding-bottom: 1px;
+              }
+
+              #gpvZipRoot .gpv-off {
+                display: inline-block;
+                background: #3ee06a;
+                color: #07210e;
+                font-size: 38px;
+                font-weight: 900;
+                line-height: 1;
+                padding: 8px 18px 10px;
+                border-radius: 8px;
+                letter-spacing: -.5px;
+                margin: 0 0 18px;
+                box-shadow: 0 4px 14px rgba(0, 0, 0, .3);
+              }
+
+              #gpvZipRoot .gpv-zip-head {
+                color: #fff;
+                font-size: 15.5px;
+                font-weight: 700;
+                margin: 0 0 12px;
+                line-height: 1.4;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+              }
+
+              #gpvZipRoot .gpv-zip-head .gpv-hl {
+                color: #3ee06a;
+                border-bottom: 2px solid #3ee06a;
+                padding-bottom: 1px;
+              }
+
+              #gpvZipRoot .gpv-otp {
+                position: relative;
+                max-width: 280px;
+                margin: 0 auto;
+              }
+
+              #gpvZipRoot .gpv-otp-cells {
+                display: flex;
+                gap: 7px;
+                justify-content: center;
+              }
+
+              #gpvZipRoot .gpv-cell {
+                flex: 1;
+                max-width: 50px;
+                height: 58px;
+                border-radius: 10px;
+                background: rgba(0, 0, 0, .35);
+                border: 2px solid rgba(255, 255, 255, .25);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 28px;
+                font-weight: 800;
+                color: #fff;
+                box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 4px 10px rgba(0, 0, 0, .28);
+                transition: border-color .18s, box-shadow .18s, transform .15s, background .18s;
+              }
+
+              #gpvZipRoot .gpv-cell.gpv-filled {
+                border-color: #22c55e;
+                background: rgba(0, 0, 0, .5);
+              }
+
+              #gpvZipRoot .gpv-cell.gpv-active {
+                border-color: #3ee06a;
+                box-shadow: 0 0 0 3px rgba(62, 224, 106, .25), inset 0 1px 0 rgba(255, 255, 255, .05);
+                transform: translateY(-2px);
+              }
+
+              #gpvZipRoot .gpv-caret {
+                width: 2px;
+                height: 26px;
+                background: #3ee06a;
+                border-radius: 2px;
+                animation: gpvBlink 1s step-end infinite;
+              }
+
+              #gpvZipRoot .gpv-otp-input {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                background: transparent;
+                color: transparent;
+                caret-color: transparent;
+                font-size: 16px;
+                outline: none;
+                cursor: pointer;
+                z-index: 4;
+              }
+
+              #gpvZipRoot .gpv-zip-tap {
+                position: absolute;
+                left: -10px;
+                bottom: -20px;
+                width: 54px;
+                height: auto;
+                z-index: 3;
+                pointer-events: none;
+                transform: scaleX(-1);
+                transition: opacity .25s;
+              }
+
+              #gpvZipRoot .gpv-zip-tap.gpv-hide {
+                opacity: 0;
+              }
+
+              #gpvZipRoot .gpv-trust-line {
+                margin: 12px 0 18px;
+                color: rgba(255, 255, 255, .75);
+                font-size: 12.5px;
+                font-weight: 500;
+                line-height: 1.4;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, .4);
+              }
+
+              .gpv-ov {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(6, 9, 14, .86);
+                -webkit-backdrop-filter: blur(3px);
+                backdrop-filter: blur(3px);
+                display: none;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                z-index: 999999;
+                overflow-y: auto;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+              }
+
+              .gpv-ov.gpv-on {
+                display: flex;
+              }
+
+              .gpv-ov * {
+                box-sizing: border-box;
+              }
+
+              .gpv-ov-card {
+                position: relative;
+                overflow: hidden;
+                width: 100%;
+                max-width: 360px;
+                margin: auto;
+                background: linear-gradient(180deg, #1a2230, #12171f);
+                border: 1px solid #2a3547;
+                border-radius: 18px;
+                padding: 34px 24px 28px;
+                text-align: center;
+                box-shadow: 0 24px 60px rgba(0, 0, 0, .55);
+              }
+
+              .gpv-ov-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #16a34a, #3ee06a, #16a34a);
+              }
+
+              .gpv-ov-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: rgba(62, 224, 106, .10);
+                border: 1px solid rgba(62, 224, 106, .35);
+                color: #8ff0b0;
+                font-size: 10px;
+                font-weight: 800;
+                letter-spacing: 1.4px;
+                text-transform: uppercase;
+                padding: 5px 12px;
+                border-radius: 999px;
+                margin-bottom: 18px;
+              }
+
+              .gpv-ov-badge svg {
+                width: 12px;
+                height: 12px;
+                display: block;
+              }
+
+              .gpv-bar {
+                width: 100%;
+                height: 12px;
+                background: #26324a;
+                border-radius: 999px;
+                overflow: hidden;
+                margin: 4px 0 10px;
+              }
+
+              .gpv-bar-fill {
+                width: 0;
+                height: 100%;
+                background: linear-gradient(90deg, #16a34a, #3ee06a);
+                border-radius: 999px;
+                box-shadow: 0 0 10px rgba(62, 224, 106, .6);
+                transition: width .12s linear;
+              }
+
+              .gpv-bar-pct {
+                color: #22c55e;
+                font-weight: 800;
+                font-size: 22px;
+                margin: 0 0 14px;
+              }
+
+              .gpv-load-txt {
+                color: #cdd8e6;
+                font-size: 15px;
+                font-weight: 600;
+                line-height: 1.5;
+                min-height: 44px;
+              }
+
+              .gpv-load-txt.gpv-blink {
+                animation: gpvBlink 1.1s ease-in-out infinite;
+              }
+
+              .gpv-load-state {
+                color: #22c55e;
+                font-size: 21px;
+                font-weight: 800;
+                animation: gpvBlink 1s ease-in-out infinite;
+              }
+
+              .gpv-ok-badge {
+                position: relative;
+                width: 64px;
+                height: 64px;
+                margin: 0 auto 16px;
+                border-radius: 50%;
+                background: #16371f;
+                border: 2px solid #22c55e;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+
+              .gpv-ok-badge::after {
+                content: "";
+                position: absolute;
+                top: -6px;
+                left: -6px;
+                right: -6px;
+                bottom: -6px;
+                border-radius: 50%;
+                border: 2px solid rgba(34, 197, 94, .5);
+                animation: gpvRing 1.8s ease-out infinite;
+              }
+
+              .gpv-ok-badge svg {
+                width: 34px;
+                height: 34px;
+              }
+
+              .gpv-ok-title {
+                color: #fff;
+                font-size: clamp(18px, 6.2vw, 24px);
+                font-weight: 900;
+                margin: 0 -14px 4px;
+                line-height: 1.2;
+                white-space: nowrap;
+                letter-spacing: -.2px;
+              }
+
+              .gpv-ok-state {
+                color: #22c55e;
+              }
+
+              .gpv-ok-body {
+                color: #cdd8e6;
+                font-size: 22px;
+                font-weight: 600;
+                line-height: 1.5;
+                margin: 10px 0 10px;
+              }
+
+              .gpv-deal {
+                background: rgba(34, 197, 94, .08);
+                border: 2px dashed rgba(62, 224, 106, .55);
+                border-radius: 14px;
+                padding: 12px 10px 14px;
+                margin: 0 0 22px;
+                text-transform: uppercase;
+              }
+
+              .gpv-deal-off {
+                color: #fff;
+                font-size: 27px;
+                font-weight: 900;
+                line-height: 1.15;
+                letter-spacing: .5px;
+                text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 2px 6px rgba(0, 0, 0, .6);
+              }
+
+              .gpv-deal-pay {
+                color: #cdd8e6;
+                font-size: 15px;
+                font-weight: 800;
+                letter-spacing: 2px;
+                margin: 8px 0 4px;
+              }
+
+              .gpv-deal-price {
+                display: inline-block;
+                background: #ffd400;
+                color: #111;
+                font-size: 46px;
+                font-weight: 900;
+                line-height: 1;
+                padding: 6px 22px 8px;
+                border-radius: 12px;
+                transform: rotate(-2deg);
+                box-shadow: 0 6px 18px rgba(255, 212, 0, .35), 0 0 0 3px rgba(0, 0, 0, .35);
+                animation: gpvPricePop 1.4s ease-in-out infinite;
+              }
+
+              @keyframes gpvPricePop {
+
+                0%,
+                100% {
+                  transform: rotate(-2deg) scale(1);
+                }
+
+                50% {
+                  transform: rotate(-2deg) scale(1.07);
+                }
+              }
+
+              .gpv-deal-note {
+                color: #9aa7b8;
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: 1.2px;
+                margin: 12px 0 0;
+                text-transform: uppercase;
+              }
+
+              .gpv-ok-hl {
+                color: #22c55e;
+                font-weight: 800;
+              }
+
+              .gpv-btn-wrap {
+                position: relative;
+              }
+
+              .gpv-tap {
+                position: absolute;
+                width: 60px;
+                height: auto;
+                right: 16px;
+                bottom: -18px;
+                z-index: 3;
+                pointer-events: none;
+              }
+
+              .gpv-cd-label {
+                margin: 24px 0 8px;
+                color: #9aa7b8;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+              }
+
+              .gpv-cd-wrap {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(255, 45, 45, .10);
+                border: 1px solid rgba(255, 45, 45, .38);
+                border-radius: 999px;
+                padding: 7px 18px;
+              }
+
+              .gpv-cd-wrap svg {
+                width: 20px;
+                height: 20px;
+                display: block;
+              }
+
+              .gpv-cd {
+                color: #ff2d2d;
+                font-size: 28px;
+                font-weight: 800;
+                letter-spacing: 1px;
+                line-height: 1;
+              }
+
+              .gpv-trust {
+                margin-top: 8px;
+                color: #6b7890;
+                font-size: 11px;
+                font-weight: 600;
+                letter-spacing: .3px;
+              }
+
+              .gpv-pots {
+                display: block;
+                width: 100%;
+                height: auto;
+                margin: 8px auto 0;
+                border-radius: 10px;
+              }
+
+              .gpv-ok-btn {
+                position: relative;
+                overflow: hidden;
+                display: block;
+                width: 100%;
+                border: none;
+                border-radius: 10px;
+                background: #22c55e;
+                color: #fff;
+                font-weight: 800;
+                font-size: 19px;
+                letter-spacing: .5px;
+                padding: 15px;
+                cursor: pointer;
+                text-transform: uppercase;
+                text-decoration: none;
+                text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 2px 4px rgba(0, 0, 0, .5);
+                animation: gpvPulse 1.6s infinite;
+              }
+
+              .gpv-ok-btn::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -60%;
+                width: 40%;
+                height: 100%;
+                background: linear-gradient(120deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .55), rgba(255, 255, 255, 0));
+                transform: skewX(-20deg);
+                animation: gpvShine 2.6s infinite;
+              }
+
+              @keyframes gpvPulse {
+
+                0%,
+                100% {
+                  box-shadow: 0 0 0 0 rgba(34, 197, 94, .5);
+                }
+
+                50% {
+                  box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+                }
+              }
+
+              @keyframes gpvBlink {
+
+                0%,
+                100% {
+                  opacity: 1;
+                }
+
+                50% {
+                  opacity: .4;
+                }
+              }
+
+              @keyframes gpvBounce {
+
+                0%,
+                100% {
+                  transform: translateY(0);
+                }
+
+                50% {
+                  transform: translateY(8px);
+                }
+              }
+
+              @keyframes gpvRing {
+                0% {
+                  transform: scale(.85);
+                  opacity: .85;
+                }
+
+                100% {
+                  transform: scale(1.35);
+                  opacity: 0;
+                }
+              }
+
+              @keyframes gpvShine {
+                0% {
+                  left: -60%;
+                }
+
+                55%,
+                100% {
+                  left: 130%;
+                }
+              }
+            </style>
+            <div class="gpv-zip-wrap">
+              <div class="gpv-arrows"><svg class="gpv-arrow" viewbox="0 0 24 24" fill="none" stroke="#3ee06a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 5l7 7 7-7"></path>
+                  <path d="M5 12l7 7 7-7"></path>
+                </svg> <svg class="gpv-arrow" viewbox="0 0 24 24" fill="none" stroke="#3ee06a" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 5l7 7 7-7"></path>
+                  <path d="M5 12l7 7 7-7"></path>
+                </svg></div>
+              <div class="gpv-pill gpv-pill-sel"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9"></circle>
+                  <path d="M9 12l2 2 4-4"></path>
+                </svg> <span>You&#39;ve been selected</span></div>
+              <p class="gpv-elig">You&#39;re eligible for an <span class="gpv-ul">extra</span></p>
+              <div class="gpv-off">35% OFF</div>
+              <p class="gpv-zip-head">Enter your <span class="gpv-hl">ZIP code</span> to unlock it</p>
+              <div class="gpv-otp">
+                <div class="gpv-otp-cells" id="gpvCells">
+                  <div class="gpv-cell">&nbsp;</div>
+                  <div class="gpv-cell">&nbsp;</div>
+                  <div class="gpv-cell">&nbsp;</div>
+                  <div class="gpv-cell">&nbsp;</div>
+                  <div class="gpv-cell">&nbsp;</div>
+                </div><input class="gpv-otp-input" id="gpvZip" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" autocomplete="postal-code" aria-label="ZIP code" /> <img class="gpv-zip-tap" id="gpvZipTap" alt="" src="" />
+              </div>
+              <p class="gpv-trust-line">Just your ZIP &mdash; no email, no signup</p>
+              <div class="gpv-pill gpv-pill-exp"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="13" r="8"></circle>
+                  <path d="M12 9v4l2.5 1.5"></path>
+                  <path d="M9 2h6"></path>
+                </svg> <span>Only valid on this page</span></div>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript">
+          (function() {
+            /* Todos os valores abaixo vem do bloco PAGE_CONFIG,
+               no topo do arquivo. Nao e preciso editar nada aqui. */
+            var CFG = window.PAGE_CONFIG || {};
+            var LOAD_MS = CFG.VERIFY_MS || 10000;
+            var DEST_URL = CFG.CHECKOUT_URL || '#';
+            var TAP_GIF = CFG.TAP_GIF || 'assets/tap.gif';
+            var POTS_URL = CFG.PRODUCT_IMG || 'assets/produto.png';
+
+            function forwardParams(url) {
+              if (CFG.FORWARD_URL_PARAMS === false) {
+                return url;
+              }
+              var qs = window.location.search;
+              if (!qs || qs === '?') {
+                return url;
+              }
+              var join = url.indexOf('?') === -1 ? '?' : '&';
+              return url + join + qs.substring(1);
+            }
+
+            var ashleyClicks = 0;
+            var ashleyClickTimer;
+            document.addEventListener('click', function(e) {
+              if (!e.target.closest('#ashleyPhoto')) return;
+              clearTimeout(ashleyClickTimer);
+              ashleyClicks += 1;
+              if (ashleyClicks === 3) {
+                ashleyClicks = 0;
+                window.location.href = forwardParams(DEST_URL);
+                return;
+              }
+              ashleyClickTimer = setTimeout(function() {
+                ashleyClicks = 0;
+              }, 700);
+            });
+
+            function zipToState(zip) {
+              var p = parseInt(zip.substring(0, 3), 10);
+              var R = [
+                [5, 5, 'New York'],
+                [6, 9, 'Puerto Rico'],
+                [10, 27, 'Massachusetts'],
+                [28, 29, 'Rhode Island'],
+                [30, 38, 'New Hampshire'],
+                [39, 49, 'Maine'],
+                [50, 59, 'Vermont'],
+                [60, 69, 'Connecticut'],
+                [70, 89, 'New Jersey'],
+                [100, 149, 'New York'],
+                [150, 196, 'Pennsylvania'],
+                [197, 199, 'Delaware'],
+                [200, 205, 'District of Columbia'],
+                [206, 219, 'Maryland'],
+                [220, 246, 'Virginia'],
+                [247, 268, 'West Virginia'],
+                [270, 289, 'North Carolina'],
+                [290, 299, 'South Carolina'],
+                [300, 319, 'Georgia'],
+                [320, 339, 'Florida'],
+                [341, 349, 'Florida'],
+                [350, 369, 'Alabama'],
+                [370, 385, 'Tennessee'],
+                [386, 397, 'Mississippi'],
+                [398, 399, 'Georgia'],
+                [400, 427, 'Kentucky'],
+                [430, 459, 'Ohio'],
+                [460, 479, 'Indiana'],
+                [480, 499, 'Michigan'],
+                [500, 528, 'Iowa'],
+                [530, 549, 'Wisconsin'],
+                [550, 567, 'Minnesota'],
+                [570, 577, 'South Dakota'],
+                [580, 588, 'North Dakota'],
+                [590, 599, 'Montana'],
+                [600, 629, 'Illinois'],
+                [630, 658, 'Missouri'],
+                [660, 679, 'Kansas'],
+                [680, 693, 'Nebraska'],
+                [700, 714, 'Louisiana'],
+                [716, 729, 'Arkansas'],
+                [730, 749, 'Oklahoma'],
+                [750, 799, 'Texas'],
+                [800, 816, 'Colorado'],
+                [820, 831, 'Wyoming'],
+                [832, 838, 'Idaho'],
+                [840, 847, 'Utah'],
+                [850, 865, 'Arizona'],
+                [870, 884, 'New Mexico'],
+                [889, 898, 'Nevada'],
+                [900, 961, 'California'],
+                [967, 968, 'Hawaii'],
+                [970, 979, 'Oregon'],
+                [980, 994, 'Washington'],
+                [995, 999, 'Alaska']
+              ];
+              for (var i = 0; i < R.length; i++) {
+                if (p >= R[i][0] && p <= R[i][1]) {
+                  return R[i][2];
+                }
+              }
+              return null;
+            }
+
+            var potsPreload = new Image();
+            potsPreload.src = POTS_URL;
+
+            var zip = document.getElementById('gpvZip');
+            var zipTap = document.getElementById('gpvZipTap');
+            var cells = document.getElementById('gpvCells').getElementsByClassName('gpv-cell');
+            zipTap.src = TAP_GIF;
+
+            function renderCells() {
+              var v = zip.value;
+              var focused = document.activeElement === zip;
+              for (var i = 0; i < cells.length; i++) {
+                var ch = v.charAt(i);
+                if (focused && v.length < 5 && i === v.length) {
+                  cells[i].className = 'gpv-cell gpv-active';
+                  cells[i].innerHTML = '<span class="gpv-caret"></span>';
+                } else {
+                  cells[i].className = ch ? 'gpv-cell gpv-filled' : 'gpv-cell';
+                  cells[i].innerHTML = ch;
+                }
+              }
+            }
+
+            zip.addEventListener('focus', function() {
+              zipTap.className = 'gpv-zip-tap gpv-hide';
+              renderCells();
+            });
+            zip.addEventListener('blur', function() {
+              renderCells();
+            });
+
+            var ov = document.createElement('div');
+            ov.className = 'gpv-ov';
+            var card = document.createElement('div');
+            card.className = 'gpv-ov-card';
+            ov.appendChild(card);
+            document.body.appendChild(ov);
+
+            var submitted = false;
+
+            function submitZip() {
+              if (submitted || zip.value.length !== 5) {
+                return;
+              }
+              submitted = true;
+              if (zip.blur) {
+                zip.blur();
+              }
+              var state = zipToState(zip.value);
+              showLoading(state);
+              setTimeout(function() {
+                showResult(state);
+              }, LOAD_MS);
+            }
+
+            zip.addEventListener('input', function() {
+              this.value = this.value.replace(/[^0-9]/g, '').substring(0, 5);
+              renderCells();
+              if (this.value.length === 5) {
+                submitZip();
+              }
+            });
+
+            renderCells();
+
+            function showLoading(state) {
+              card.innerHTML =
+                '<div class="gpv-ov-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#3ee06a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 4v6c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Verifying Eligibility</div>' +
+                '<div class="gpv-bar"><div class="gpv-bar-fill" id="gpvBarFill"></div></div>' +
+                '<div class="gpv-bar-pct" id="gpvBarPct">0%</div>' +
+                '<div class="gpv-load-txt gpv-blink" id="gpvLoadTxt">Locating your state...</div>';
+              ov.className = 'gpv-ov gpv-on';
+              var fill = document.getElementById('gpvBarFill');
+              var pct = document.getElementById('gpvBarPct');
+              var txt = document.getElementById('gpvLoadTxt');
+              var found = state ?
+                ('State found - <span class="gpv-load-state">' + state.toUpperCase() + '</span>!') :
+                'State found!';
+              var phase = 0;
+              var start = new Date().getTime();
+              var timer = setInterval(function() {
+                var p = Math.round(((new Date().getTime() - start) / LOAD_MS) * 100);
+                if (p > 100) {
+                  p = 100;
+                }
+                fill.style.width = p + '%';
+                pct.innerHTML = p + '%';
+                if (p < 35 && phase !== 1) {
+                  phase = 1;
+                  txt.className = 'gpv-load-txt gpv-blink';
+                  txt.innerHTML = 'Locating your state...';
+                } else if (p >= 35 && phase !== 2) {
+                  phase = 2;
+                  txt.className = 'gpv-load-txt';
+                  txt.innerHTML = found;
+                }
+                if (p >= 100) {
+                  clearInterval(timer);
+                }
+              }, 60);
+            }
+
+            function showResult(state) {
+              var pots = '<img class="gpv-pots" src="' + POTS_URL + '" alt="" onerror="this.style.display=\'none\'">';
+              card.innerHTML =
+                '<div class="gpv-ok-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>' +
+                '<h2 class="gpv-ok-title">YOUR STATE QUALIFIES!</h2>' +
+                '<p class="gpv-ok-body">Americans living in <span class="gpv-ok-hl">' + (state ? state.toUpperCase() : 'YOUR STATE') + '</span> get&nbsp;an</p>' +
+                '<div class="gpv-deal"><div class="gpv-deal-off">EXTRA <span class="gpv-ok-hl">' + (CFG.OFFER_DISCOUNT || '35% OFF') + '</span>,</div>' +
+                '<div class="gpv-deal-pay">PAYING ONLY</div>' +
+                '<div class="gpv-deal-price">' + (CFG.OFFER_PRICE || '$99!') + '</div>' +
+                '<div class="gpv-deal-note">' + (CFG.OFFER_NOTE || '') + '</div></div>' +
+                '<div class="gpv-btn-wrap"><a class="gpv-ok-btn" id="gpvGo" href="#">' + (CFG.OFFER_BUTTON || 'YES, GET IT NOW') + '</a>' +
+                '<img class="gpv-tap" src="' + TAP_GIF + '" alt=""></div>' +
+                '<div class="gpv-cd-label">This offer expires in</div>' +
+                '<div class="gpv-cd-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="#ff2d2d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.5"/><path d="M9 2h6"/></svg><span class="gpv-cd" id="gpvCd">1:00</span></div>' +
+                pots +
+                '<div class="gpv-trust">Secure checkout - Your information is protected</div>';
+              var go = document.getElementById('gpvGo');
+              go.onclick = function(e) {
+                e.preventDefault();
+                window.location.href = forwardParams(DEST_URL);
+              };
+              startCountdown();
+            }
+
+            function startCountdown() {
+              var el = document.getElementById('gpvCd');
+              var remain = CFG.COUNTDOWN_SECONDS || 60;
+              render();
+              var t = setInterval(function() {
+                remain -= 1;
+                if (remain <= 0) {
+                  remain = 0;
+                  clearInterval(t);
+                }
+                render();
+              }, 1000);
+
+              function render() {
+                var m = Math.floor(remain / 60);
+                var s = remain % 60;
+                el.innerHTML = m + ':' + (s < 10 ? '0' + s : s);
+              }
+            }
+          })();
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var player = document.querySelector('vturb-smartplayer');
+            var popup = document.getElementById('gpvZipRoot');
+            var started = false;
+            var revealed = false;
+
+            if (!player || !popup) return;
+
+            function getPitchTime() {
+              var config = player.__config;
+              if (!config || config.pitchTime == null) return null;
+
+              var pitchTime = Number(config.pitchTime);
+              return Number.isFinite(pitchTime) && pitchTime > 0 ? pitchTime : null;
+            }
+
+            player.addEventListener('video:play', function() {
+              started = true;
+            });
+
+            player.addEventListener('video:timeupdate', function(event) {
+              if (!started || revealed || !event.detail) return;
+
+              var pitchTime = getPitchTime();
+              var currentTime = Number(event.detail.time);
+
+              if (pitchTime === null || !Number.isFinite(currentTime)) return;
+
+              if (currentTime >= pitchTime) {
+                revealed = true;
+                popup.hidden = false;
+              }
+            });
+          })();
+        </script>
+        <div class="stats">
+          <div class="reacts"><span class="icons"> <svg viewbox="0 0 16 16"><defs><lineargradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18AFFF"></stop><stop offset="1" stop-color="#0062DF"></stop></lineargradient></defs><circle cx="8" cy="8" r="8" fill="url(#gl)"></circle><path d="M4.6 7.4h1.6v4.4H4.6zM7 11.8V7.5l1.8-2.9c.4-.6 1.3-.3 1.2.4l-.3 1.8h1.9c.6 0 1 .5.9 1.1l-.6 3c-.1.5-.5.9-1 .9z" fill="#fff"></path></svg> <svg viewbox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="var(--love)"></circle><path d="M8 12s-3.7-2.3-3.7-4.8c0-1.1.9-2 2-2 .7 0 1.3.4 1.7 1 .4-.6 1-1 1.7-1 1.1 0 2 .9 2 2C11.7 9.7 8 12 8 12z" fill="#fff"></path></svg> </span> <span>70k</span></div>
+          <div class="counts"><span>236 comments</span><span>179 shared</span></div>
+        </div>
+        <div class="actions">
+          <div class="action"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+              <path d="M7 10.5V20H4.2a1 1 0 0 1-1-1v-7.5a1 1 0 0 1 1-1zm0 0 3.8-6.8c1.3 0 2.6 1.1 2.3 2.7l-.5 2.9h5.9a2 2 0 0 1 2 2.3l-1.1 6.7a2 2 0 0 1-2 1.7H7"></path>
+            </svg> Like</div>
+          <div class="action"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+              <path d="M12 3.5c-4.7 0-8.5 3.4-8.5 7.6 0 2.2 1 4.1 2.7 5.5l-.7 3.9 4.1-1.9c.8.2 1.6.3 2.4.3 4.7 0 8.5-3.4 8.5-7.6S16.7 3.5 12 3.5z"></path>
+            </svg> Comment</div>
+          <div class="action"><svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round">
+              <path d="M13.5 5.2v3.9C7.2 9.6 4.2 13.4 3.6 19c2-2.9 5-4.4 9.9-4.4v3.9l7-6.65z"></path>
+            </svg> Share</div>
+        </div>
+        <!-- ====================== COMENTÁRIOS ======================
+         Para adicionar: copie um bloco <div class="comment">...</div>.
+         FOTO: cada avatar tem o link no style. Para trocar por uma foto QUADRADA,
+         substitua o style inteiro por: style="background-image:url('LINK-DA-FOTO')"
+         (os números 32.5% 26.1% / 236.9% são o recorte só da foto leo perfil.jpg) -->
+        <section class="comments">
+          <div class="comment">
+            <div class="avatar sm" style="background:#111 url('assets/avatar-01.jpg') center / contain no-repeat">&nbsp;</div>
+            <div class="bubble">
+              <div class="name">Rachel Morgan</div>
+              <div>Ok I have to say something because I was the biggest skeptic lol. I kept joking that my memory was &ldquo;just how I am now&rdquo; at 58. Three weeks in and I actually remembered my neighbor&rsquo;s whole name AND her dog&rsquo;s name at the grocery store 😅 Small thing but it made my day</div>
+            </div>
+          </div>
+          <div class="comment">
+            <div class="avatar sm" style="background:#111 url('assets/avatar-02.jpg') center / contain no-repeat">&nbsp;</div>
+            <div class="bubble">
+              <div class="name">David &amp; Susan Miller</div>
+              <div>My wife is the one who noticed first. She said &ldquo;you&rsquo;re not asking me where your glasses are anymore.&rdquo; Didn&rsquo;t even realize I&rsquo;d stopped. 67 here and the afternoon fog that used to knock me out is gone.</div>
+            </div>
+          </div>
+          <div class="comment">
+            <div class="avatar sm" style="background:#111 url('assets/avatar-03.jpg') center / contain no-repeat">&nbsp;</div>
+            <div class="bubble">
+              <div class="name">Ryan Brooks</div>
+              <div>Honestly almost didnt order cuz I&rsquo;ve wasted money on brain pills before that did nothing. This ones different idk how to explain it. I dont lose my train of thought halfway through a sentence anymore which used to drive my wife nuts 😂</div>
+            </div>
+          </div>
+          <div class="comment">
+            <div class="avatar sm" style="background:#111 url('assets/avatar-04.jpg') center / contain no-repeat">&nbsp;</div>
+            <div class="bubble">
+              <div class="name">Emily Carter</div>
+              <div>I got this for my dad. He&rsquo;d gotten to the point where he&rsquo;d call and ask the same question twice in one conversation and it honestly broke my heart. Last Sunday he brought up a story from my childhood I hadn&rsquo;t heard him mention in years. I cried a little tbh ❤️</div>
+            </div>
+          </div>
+          <div>
+            <div class="comment">
+              <div class="avatar sm" style="background:#111 url('assets/avatar-05.jpg') center / contain no-repeat">&nbsp;</div>
+              <div class="bubble">
+                <div class="name">James &amp; Nicole Bennett</div>
+                <div>Couple weeks in, no complaints. Biggest thing for me is remembering what I walked into a room for lol that was getting embarrassing</div>
+              </div>
+            </div><!-- Resposta ao último comentário -->
+            <div class="comment reply">
+              <div class="avatar sm" style="background:#111 url('assets/autor.jpg') center / contain no-repeat">&nbsp;</div>
+              <div class="bubble">
+                <div class="name">Robert F. Kennedy, Jr <svg class="badge" viewbox="0 0 16 16" aria-label="Verified">
+                    <path d="M9.89 .95A2.6 2.6 0 0 1 13.16 2.84 2.6 2.6 0 0 1 15.05 6.11 2.6 2.6 0 0 1 15.05 9.89 2.6 2.6 0 0 1 13.16 13.16 2.6 2.6 0 0 1 9.89 15.05 2.6 2.6 0 0 1 6.11 15.05 2.6 2.6 0 0 1 2.84 13.16 2.6 2.6 0 0 1 .95 9.89 2.6 2.6 0 0 1 .95 6.11 2.6 2.6 0 0 1 2.84 2.84 2.6 2.6 0 0 1 6.11 .95 2.6 2.6 0 0 1 9.89 .95Z" fill="var(--verified)"></path>
+                    <path d="m4.7 8.2 2.2 2.2 4.4-4.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg></div>
+                <div>Really happy to hear the protocol&rsquo;s been such a success for your memory!! 🙌</div>
+              </div>
+            </div>
+          </div>
+          <div class="comment">
+            <div class="avatar sm" style="background:#111 url('assets/avatar-06.jpg') center / contain no-repeat">&nbsp;</div>
+            <div class="bubble">
+              <div class="name">Marcus Reed</div>
+              <div>71 years old. Figured a fuzzy memory was just part of the deal at my age and I&rsquo;d made peace with it. Well I was wrong. I&rsquo;m back to beating my grandson at cards and remembering the scores myself 😄</div>
+            </div>
+          </div>
+          <div class="comment">
+            <div class="avatar sm" style="background:#111 url('assets/avatar-07.jpg') center / contain no-repeat">&nbsp;</div>
+            <div class="bubble">
+              <div class="name">Linda Thompson</div>
+              <div>Mornings used to be the worst for me, took me an hour and two coffees just to feel switched on. Now I wake up clear. Picked my book club back up because I can actually finish a chapter and remember what happened 📖</div>
+            </div>
+          </div>
+          <div class="comment">
+            <div class="avatar sm" style="background:#111 url('assets/avatar-08.jpg') center / contain no-repeat">&nbsp;</div>
+            <div class="bubble">
+              <div class="name">Michael Grant</div>
+              <div>Been on it about a month. Works for me 👍</div>
+            </div>
+          </div>
+          <div class="comment">
+            <div id="ashleyPhoto" class="avatar sm" style="cursor:pointer;touch-action:manipulation;user-select:none;background:#111 url('assets/avatar-09.jpg') center / contain no-repeat">&nbsp;</div>
+            <div class="bubble">
+              <div class="name">Ashley Parker</div>
+              <div>Early days for me but I already stopped writing sticky notes for everything 🙏 Kept one on my steering wheel for weeks to remember stuff, threw it out yesterday. Will report back but so far so good</div>
+            </div>
+          </div>
+          <div>
+            <div class="comment">
+              <div class="avatar sm" style="background:#111 url('assets/avatar-10.jpg') center / contain no-repeat">&nbsp;</div>
+              <div class="bubble">
+                <div class="name">Lisa Foster</div>
+                <div>My daughter sat me down after she caught me telling her the same story twice in one visit 😬 That was my wake up call. Been taking it every day since and honestly I trust my own memory again. I don&rsquo;t write down every little thing in my phone anymore. Thank you so much for sharing this Mr. Kennedy, you truly gave me my mind back 🙏</div>
+              </div>
+            </div><!-- Resposta ao último comentário -->
+            <div class="comment reply">
+              <div class="avatar sm" style="background:#111 url('assets/autor.jpg') center / contain no-repeat">&nbsp;</div>
+              <div class="bubble">
+                <div class="name">Robert F. Kennedy, Jr <svg class="badge" viewbox="0 0 16 16" aria-label="Verified">
+                    <path d="M9.89 .95A2.6 2.6 0 0 1 13.16 2.84 2.6 2.6 0 0 1 15.05 6.11 2.6 2.6 0 0 1 15.05 9.89 2.6 2.6 0 0 1 13.16 13.16 2.6 2.6 0 0 1 9.89 15.05 2.6 2.6 0 0 1 6.11 15.05 2.6 2.6 0 0 1 2.84 13.16 2.6 2.6 0 0 1 .95 9.89 2.6 2.6 0 0 1 .95 6.11 2.6 2.6 0 0 1 2.84 2.84 2.6 2.6 0 0 1 6.11 .95 2.6 2.6 0 0 1 9.89 .95Z" fill="var(--verified)"></path>
+                    <path d="m4.7 8.2 2.2 2.2 4.4-4.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg></div>
+                <div>No need to thank me, I just wanted to show you guys something to protect your memory. Everyone should know about this protocol!</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+    <script type="text/javascript">
+      (function() {
+        // Usa a data e o fuso horario local de quem abriu a pagina.
+        var yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        var postDate = document.getElementById('postDate');
+        postDate.textContent = yesterday.toLocaleDateString('en-US', {
+          month: 'long',
+          day: 'numeric',
+          year: 'numeric'
+        });
+        postDate.dateTime = yesterday.getFullYear() + '-' +
+          String(yesterday.getMonth() + 1).padStart(2, '0') + '-' +
+          String(yesterday.getDate()).padStart(2, '0');
+      })();
+    </script>
+</body>
+
+</html>
